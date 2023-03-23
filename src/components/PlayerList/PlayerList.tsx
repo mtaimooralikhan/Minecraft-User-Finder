@@ -10,21 +10,22 @@ import {
   Tooltip,
 } from "@material-ui/core";
 import { Delete, StarBorder, Star } from "@material-ui/icons";
+import "./PlayerList.css";
 
 const useStyles = makeStyles((theme) => ({
-  card: {
-    marginBottom: theme.spacing(2),
-  },
+  // card: {
+  //   marginBottom: theme.spacing(2),
+  // },
   avatar: {
     width: theme.spacing(8),
     height: theme.spacing(8),
     margin: "auto",
   },
-  actions: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
+  // actions: {
+  //   display: "flex",
+  //   justifyContent: "space-between",
+  //   alignItems: "center",
+  // },
 }));
 
 interface Player {
@@ -46,8 +47,9 @@ const PlayerList: React.FC<Props> = ({ players, onDelete, onPromote }) => {
   return (
     <>
       {players.map((player: Player) => (
-        <Card key={player.uuid} className={classes.card}>
+        <Card key={player.uuid} className="card">
           <CardHeader
+            className="card-header"
             avatar={
               <Avatar
                 src={`https://crafatar.com/renders/body/${player?.uuid}`}
@@ -61,7 +63,7 @@ const PlayerList: React.FC<Props> = ({ players, onDelete, onPromote }) => {
               {player.isAdmin ? "Admin" : "Player"}
             </Typography>
           </CardContent>
-          <div className={classes.actions}>
+          <div className="actions">
             <Tooltip title="Delete">
               <IconButton onClick={() => onDelete(player.uuid)}>
                 <Delete />

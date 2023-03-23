@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PlayerList from "../PlayerList/PlayerList";
+import "./WhiteListManager.css";
 
 function WhiteListManager() {
   const [playerName, setPlayerName] = useState<string>("");
@@ -20,7 +21,6 @@ function WhiteListManager() {
       return;
     }
     const res = await response.json();
-    // const playerUUID = (await response.json()).id;
     let player = [...players, res];
     console.log(player);
 
@@ -47,20 +47,22 @@ function WhiteListManager() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleAddPlayer}>
-        <label>
+    <div className="container">
+      <form className="formstyle" onSubmit={handleAddPlayer}>
+        <label className="labelStyle">
           Player name:
           <input type="text" value={playerName} onChange={handleInputChange} />
         </label>
         <button type="submit">Add player</button>
       </form>
       {players.length > 0 && (
-        <PlayerList
-          players={players}
-          onDelete={handleDeletePlayer}
-          onPromote={handlePromotePlayer}
-        />
+        <div className="cardCont">
+          <PlayerList
+            players={players}
+            onDelete={handleDeletePlayer}
+            onPromote={handlePromotePlayer}
+          />
+        </div>
       )}
     </div>
   );

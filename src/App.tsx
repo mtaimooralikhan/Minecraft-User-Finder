@@ -5,7 +5,7 @@ import WhiteListManager from "./components/WhiteListManager/WhiteListManager";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <WhiteListManager />
     </div>
   );
