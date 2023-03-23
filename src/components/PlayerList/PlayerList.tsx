@@ -11,6 +11,17 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { Delete, Star } from "@material-ui/icons";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+  avatar: {
+    width: 50,
+    height: 50,
+  },
+});
 
 interface Player {
   id: number;
@@ -26,9 +37,10 @@ interface Props {
 }
 
 const PlayerList: React.FC<Props> = ({ players, onDelete, onPromote }) => {
+  const classes = useStyles();
   return (
     <TableContainer component={Paper}>
-      <Table>
+      <Table className={classes.table} aria-label="player table">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
@@ -37,25 +49,29 @@ const PlayerList: React.FC<Props> = ({ players, onDelete, onPromote }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {players.map((player) => (
-            <TableRow key={player.id}>
-              <TableCell>{player.name}</TableCell>
-              <TableCell>
-                <Avatar
-                  alt={player.name}
-                  src={`https://crafatar.com/avatars/${player.skin}?size=32`}
-                />
-              </TableCell>
-              <TableCell>
-                <IconButton onClick={() => onDelete(player.id)}>
-                  <Delete />
-                </IconButton>
-                <IconButton onClick={() => onPromote(player.id)}>
-                  <Star color={player.isAdmin ? "secondary" : "action"} />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          ))}
+          {players.map((player: any) => {
+            console.log(player);
+            return (
+              <TableRow key={player?.uuid}>
+                <TableCell>{player.username}</TableCell>
+                <TableCell>
+                  <Avatar
+                    alt={player.username}
+                    src={`https://crafatar.com/skins/${player?.uuid}`}
+                    className={classes.avatar}
+                  />
+                </TableCell>
+                <TableCell>
+                  <IconButton onClick={() => onDelete(player.id)}>
+                    <Delete />
+                  </IconButton>
+                  <IconButton onClick={() => onPromote(player.id)}>
+                    <Star color={player.isAdmin ? "secondary" : "action"} />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>

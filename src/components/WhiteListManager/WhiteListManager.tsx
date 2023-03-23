@@ -21,8 +21,11 @@ function WhiteListManager() {
     }
     const res = await response.json();
     // const playerUUID = (await response.json()).id;
+    let player = [...players, res];
+    console.log(player);
 
-    setPlayers([...players, res]);
+    setPlayers(player);
+
     setPlayerName("");
   };
 
@@ -52,17 +55,13 @@ function WhiteListManager() {
         </label>
         <button type="submit">Add player</button>
       </form>
-      {players.length > 0 &&
-        players.map((player) => {
-          console.log("player:", player);
-          return (
-            <PlayerList
-              players={player}
-              onDelete={handleDeletePlayer}
-              onPromote={handlePromotePlayer}
-            />
-          );
-        })}
+      {players.length > 0 && (
+        <PlayerList
+          players={players}
+          onDelete={handleDeletePlayer}
+          onPromote={handlePromotePlayer}
+        />
+      )}
     </div>
   );
 }
