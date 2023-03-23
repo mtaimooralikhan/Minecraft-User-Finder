@@ -31,14 +31,14 @@ function WhiteListManager() {
 
   const handleDeletePlayer = (id: number) => {
     setPlayers((prevPlayerList) =>
-      prevPlayerList.filter((player) => player.id !== id)
+      prevPlayerList.filter((player) => player.uuid !== id)
     );
   };
 
   const handlePromotePlayer = (id: number) => {
     setPlayers((prevPlayerList) =>
       prevPlayerList.map((player) => {
-        if (player.id === id) {
+        if (player.uuid === id) {
           return { ...player, isAdmin: true };
         }
         return player;

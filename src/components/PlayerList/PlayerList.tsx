@@ -1,31 +1,35 @@
 import React from "react";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Avatar,
+  Card,
+  CardContent,
+  CardHeader,
   IconButton,
+  Typography,
+  Avatar,
+  makeStyles,
+  Tooltip,
 } from "@material-ui/core";
-import { Delete, Star } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/core/styles";
+import { Delete, StarBorder, Star } from "@material-ui/icons";
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
+const useStyles = makeStyles((theme) => ({
+  card: {
+    marginBottom: theme.spacing(2),
   },
   avatar: {
-    width: 50,
-    height: 50,
+    width: theme.spacing(8),
+    height: theme.spacing(8),
+    margin: "auto",
   },
-});
+  actions: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+}));
 
 interface Player {
-  id: number;
-  name: string;
+  uuid: number;
+  username: string;
   skin: string;
   isAdmin: boolean;
 }
@@ -38,43 +42,40 @@ interface Props {
 
 const PlayerList: React.FC<Props> = ({ players, onDelete, onPromote }) => {
   const classes = useStyles();
+
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="player table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Avatar</TableCell>
-            <TableCell>Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {players.map((player: any) => {
-            console.log(player);
-            return (
-              <TableRow key={player?.uuid}>
-                <TableCell>{player.username}</TableCell>
-                <TableCell>
-                  <Avatar
-                    alt={player.username}
-                    src={`https://crafatar.com/skins/${player?.uuid}`}
-                    className={classes.avatar}
-                  />
-                </TableCell>
-                <TableCell>
-                  <IconButton onClick={() => onDelete(player.id)}>
-                    <Delete />
-                  </IconButton>
-                  <IconButton onClick={() => onPromote(player.id)}>
-                    <Star color={player.isAdmin ? "secondary" : "action"} />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      {players.map((player: Player) => (
+        <Card key={player.uuid} className={classes.card}>
+          <CardHeader
+            avatar={
+              <Avatar
+                src={`https://crafatar.com/renders/body/${player?.uuid}`}
+                className={classes.avatar}
+              />
+            }
+            title={player.username}
+          />
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+              {player.isAdmin ? "Admin" : "Player"}
+            </Typography>
+          </CardContent>
+          <div className={classes.actions}>
+            <Tooltip title="Delete">
+              <IconButton onClick={() => onDelete(player.uuid)}>
+                <Delete />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Promote">
+              <IconButton onClick={() => onPromote(player.uuid)}>
+                {player.isAdmin ? <Star /> : <StarBorder />}
+              </IconButton>
+            </Tooltip>
+          </div>
+        </Card>
+      ))}
+    </>
   );
 };
 
