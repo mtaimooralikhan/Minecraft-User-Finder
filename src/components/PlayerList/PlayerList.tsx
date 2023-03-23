@@ -13,19 +13,11 @@ import { Delete, StarBorder, Star } from "@material-ui/icons";
 import "./PlayerList.css";
 
 const useStyles = makeStyles((theme) => ({
-  // card: {
-  //   marginBottom: theme.spacing(2),
-  // },
   avatar: {
     width: theme.spacing(8),
     height: theme.spacing(8),
     margin: "auto",
   },
-  // actions: {
-  //   display: "flex",
-  //   justifyContent: "space-between",
-  //   alignItems: "center",
-  // },
 }));
 
 interface Player {
