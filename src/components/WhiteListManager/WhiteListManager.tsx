@@ -13,6 +13,20 @@ function WhiteListManager() {
   const handleAddPlayer = async (event: any) => {
     event.preventDefault();
 
+    if (!playerName) {
+      alert("Please enter a player name");
+      return;
+    }
+
+    const existingPlayer = players.find(
+      (player) => player.username.toLowerCase() === playerName.toLowerCase()
+    );
+
+    if (existingPlayer) {
+      alert("This player is already in the list");
+      return;
+    }
+
     const response = await fetch(
       `https://api.ashcon.app/mojang/v2/user/${playerName}`
     );
